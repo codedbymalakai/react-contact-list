@@ -12,13 +12,15 @@ export default function App() {
   const [searchValue, setSearchValue] = useState('');
   const [submittedValue, setSubmittedValue] = useState('')
   const [contactList, setContactList] = useState(contacts)
+  const [contactListCount, setContactListCount] = useState(contacts.length)
+  const totalContactCount = contacts.length
 
-  console.log('Before contactList', contactList)
+  const updateCount = function (arr) {
+    console.log(arr.length)
+    setContactListCount(arr.length)
+  }
 
-
-
-
-  const handleSearch = function () {
+  const filterContacts = function () {
     setSubmittedValue(searchValue)
     let inputtedValue = ''
     if (typeof searchValue !== 'string') {
@@ -32,6 +34,13 @@ export default function App() {
 
     console.log(newArr)
     setContactList(newArr)
+
+    updateCount(newArr)
+  }
+
+
+  const handleSearch = function () {
+    filterContacts()
   }
 
 
@@ -53,6 +62,9 @@ export default function App() {
       </div>
 
       <h1>Contact List</h1>
+      <h3
+        style={{ padding: "10px" }}
+      >Showing {contactListCount} contacts of {totalContactCount}:</h3>
       <div className='contactList'>
         {contactList.map(contact => (
           <ContactCard
@@ -63,6 +75,9 @@ export default function App() {
           />
         )
         )}
+        {!contactList.length &&
+          <p>No contacts found</p>
+        }
       </div>
     </div>
   )
