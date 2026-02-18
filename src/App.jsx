@@ -3,14 +3,20 @@ import { useState } from 'react'
 
 export default function App() {
 
-  const [searchValue, setSearchValue] = useState('');
-  const [submittedValue, setSubmittedValue] = useState('')
-
   const contacts = [
     { id: 1, name: "Malakai", email: "malakai@email.com", jobTitle: "Apprentice Dev" },
     { id: 2, name: "Alice", email: "alice@email.com", jobTitle: "Store Assistant" },
     { id: 3, name: "Conor", email: "conor@email.com", jobTitle: "Piano Teacher" }
   ];
+
+  const [searchValue, setSearchValue] = useState('');
+  const [submittedValue, setSubmittedValue] = useState('')
+  const [contactList, setContactList] = useState(contacts)
+
+  console.log('Before contactList', contactList)
+
+
+
 
   const handleSearch = function () {
     setSubmittedValue(searchValue)
@@ -25,6 +31,7 @@ export default function App() {
       contact.email.toLowerCase().includes(inputtedValue.toLowerCase()))
 
     console.log(newArr)
+    setContactList(newArr)
   }
 
 
@@ -47,7 +54,7 @@ export default function App() {
 
       <h1>Contact List</h1>
       <div className='contactList'>
-        {contacts.map(contact => (
+        {contactList.map(contact => (
           <ContactCard
             key={contact.id}
             name={contact.name}
